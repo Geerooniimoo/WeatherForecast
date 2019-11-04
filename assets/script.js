@@ -51,13 +51,13 @@ function getForecast(city) {
             weatherResponse = response;
             const { city, list } = response;
             let $div = `<div class="ml-4">
-                <h1 class="display-3">${city.name}, ${city.country}</h1>
+                <h1 class="display-3 text-center">${city.name}, ${city.country}</h1>
                 <hr>
-                <h2>${moment(list[0].dt_txt).format('LLL')}</h2>
-                <h2>Temperature:${parseInt((list[0].main.temp - 273.15) * 9 / 5 + 32)} F</h2>
+                <h2>${moment(list[0].dt_txt).format('llll')}</h2>
+                <h2>Temperature: ${parseInt((list[0].main.temp - 273.15) * 9 / 5 + 32)} °F</h2>
                 <h2>Humidity: ${list[0].main.humidity}</h2>
                 <h2>Description: ${list[0].weather[0].description}</h2>
-                <img class="m-auto" src="http://openweathermap.org/img/w/${list[0].weather[0].icon}.png">
+                <img class="mainIcon" src="http://openweathermap.org/img/w/${list[0].weather[0].icon}.png">
             </div>`
             $(".jumbotron").html($div);
 
@@ -65,11 +65,11 @@ function getForecast(city) {
             for (let i = 3; i < list.length; i = i + 8) {
                 const { dt_txt, main, weather } = list[i];
                 const $card = `<div class="card text-white">
-                    <div class="card-body">
-                        <p class="card-text">${moment(dt_txt).format('dddd')}</p>
-                        <p class="card-text">Temp: ${parseInt((main.temp - 273.15) * 9 / 5 + 32)}</p>
-                        <p class="card-text">Humid:${main.humidity}</p>
-                        <p class="card-text">Desc:${weather[0].description}</p>
+                    <div class="card-body p-0">
+                        <p class="card-text day">${moment(dt_txt).format('dddd')}</p>
+                        <p class="card-text">Temp: ${parseInt((main.temp - 273.15) * 9 / 5 + 32)} °F</p>
+                        <p class="card-text">Hum:${main.humidity}</p>
+                        <p class="card-text">${weather[0].description}</p>
                         <img class="m-auto" src="http://openweathermap.org/img/w/${weather[0].icon}.png">
                     </div>
                 </div>`

@@ -6,9 +6,13 @@ body {
 }
 
 .list-group {
-    width: 250px;
+        height: 40vh;
+        overflow: scroll;
 }
 
+.list-group::-webkit-scrollbar {
+    display: none;
+}
 h3 {
     font-size: 20px;
     margin-top: 20px;
@@ -59,10 +63,24 @@ input {
 .jumbotron {
     background-color: #08417dc2;
     color: white;
+    position: relative;
+    font-family: serif;
+    box-shadow: 5px 5px 20px black;
 }
 
-.jumbotron, .card {
+.card {
     text-align: center;
     font-family: serif;
     box-shadow: 5px 5px 20px black;
+}
+
+.day {
+    font-size: 2rem;
+}
+
+.mainIcon {
+    right: 5%;
+    width: 200px;
+    position: absolute;
+    bottom: 10%;
 }
