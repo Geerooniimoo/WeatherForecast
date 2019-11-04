@@ -28,6 +28,7 @@ input {
 
 .card {
     float: left;
+    background-color: #0f0f9ae0;
 }
 
 .card-deck {
@@ -44,21 +45,24 @@ input {
 
 .title {
     color: white;
-    font-size: 30px;
+    font-size: 3rem;
     margin: auto;
 }
 
 .navBar {
-    height: 50px;
+    height: 5rem;
+    background-color: #08417dc2;
+    font-family: serif;
+    box-shadow: 5px 5px 20px;
 }
 
-.jumbotron, .card-body {
+.jumbotron {
     background-color: #08417dc2;
     color: white;
 }
 
-.jumbotron {
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
+.jumbotron, .card {
+    text-align: center;
+    font-family: serif;
+    box-shadow: 5px 5px 20px black;
 }
-
