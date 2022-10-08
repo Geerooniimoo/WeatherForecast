@@ -20,7 +20,7 @@ function searchedCitiesForecast() {
 };
 
 function buttonForecast() {
-    const city = $("#inputPassword2").val()
+    const city = $("input").val()
     $("#inputPassword2").val("")
     searchedCities.push(city);
     $(".list-group").empty();
