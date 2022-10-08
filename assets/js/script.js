@@ -1,22 +1,6 @@
 let searchedCities = [];
-const cors = "https://cors-anywhere.herokuapp.com/"
-const forecast = `api.openweathermap.org/data/2.5/forecast?q=`;
 
-// ===========================RUNNING=FUNCTIONS=================================================
-promptForApiKey();
-showSearchedCities();
-$(document).on("click", "a", searchedCitiesForecast);
-$(document).on("click", "button", buttonForecast);
-
-// ===========================1ST=FUNCTIONS=DEFINITIONS=========================================
-function promptForApiKey() {
-    if (!localStorage.getItem("openWeatherKey")) {
-        const apiKey = "&APPID=" + prompt("Please enter Open Weather Map API Key.");
-        localStorage.setItem("openWeatherKey", apiKey);
-    }
-}
-
-function showSearchedCities() {
+const renderStoredCities = () => {
     if (localStorage.getItem("cities")) {
         searchedCities = [...localStorage.getItem("cities").split(";")];
         for (let i = 0; i < searchedCities.length; i++) {
@@ -25,6 +9,11 @@ function showSearchedCities() {
         };
     };
 };
+
+renderStoredCities();
+$(document).on("click", "a", searchedCitiesForecast);
+$(document).on("click", "button", buttonForecast);
+
 
 function searchedCitiesForecast() {
     getForecast($(this).text());
@@ -36,15 +25,22 @@ function buttonForecast() {
     searchedCities.push(city);
     $(".list-group").empty();
     localStorage.setItem("cities", searchedCities.join(";"));
-    showSearchedCities();
+    renderStoredCities();
     getForecast(city);
 };
 
-// ===========================2ND=FUNCTIONS=DEFINITIONS=========================================
 function getForecast(city) {
+    const getKey = () => {
+        if (!apiKey) {
+            const apiKey = prompt("Please enter Open Weather Map API Key.")
+            getKey();
+        };
+    };
 
+    getKey();
+    
     $.ajax({
-        url: cors + forecast + city + localStorage.getItem("openWeatherKey"),
+        url: `https://api.openweathermap.org/data/2.5/forecast?q=${city}&APPID=${apiKey}`,
         method: "GET"
     })
         .then(function (response) {
