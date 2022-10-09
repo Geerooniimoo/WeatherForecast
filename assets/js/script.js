@@ -27,16 +27,18 @@ const forecast = async loc => {
 
     if (!loc) return;
 
-    let url1 = `https://api.openweathermap.org/geo/1.0/direct?q=${loc}&APPID=${apiKey}`;
+    let url1 = `https://api.openweathermap.org/geo/1.0/direct?q=${loc}&APPID=${apiKey}&limit=1`;
+    let data = await fetch(url1).then(data => data.json());
+    x = data;
     let [{lat,lon,name:city,country}] = await fetch(url1).then(data => data.json());
-
     let url2 = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&APPID=${apiKey}&units=imperial`;
     
     let {
             daily,current:{dt,humidity,temp,uvi,weather:[{description,icon}]}
         } = await fetch(url2).then(data => data.json());
+        // let data = await fetch(url2).then(data => data.json());
 
-        x = daily;
+        // x = daily;
     
     if(!store.includes(city)) {
         store.push(city);
@@ -51,15 +53,16 @@ const forecast = async loc => {
                     <h2>Temperature: ${temp} °F</h2>
                     <h2>Humidity: ${humidity}</h2>
                     <h2>Description: ${description}</h2>
-                    <h2 class="uvi ${uvi<3?'green':uvi<6?'yellow':uiv<8?'orange':uvi<11?'red':'purple'}"> ${uvi} </h2>
+                    <h2>UV Index:<span class="uvi ${uvi<3?'green':uvi<6?'yellow':uvi<8?'orange':uvi<11?'red':'purple'}"> ${uvi} </span></h2>
                     <img class="mainIcon" src="http://openweathermap.org/img/w/${icon}.png">
                 </div>`
   
     $(".jumbotron").html($div);
 
     $(".card-deck").empty();
-    for (let i = 0; i < 5; i = i++) {
-        const { dt, humidity, temp:{max:temp}, weather:[description,icon] } = daily[i];
+
+    for (let i = 0; i < 5; i++) {
+        let { dt, humidity, uvi, temp:{max:temp}, weather:[{description,icon}] } = daily[i];
         
         const $card = `<div class="card text-white">
             <div class="card-body p-0">
@@ -67,10 +70,10 @@ const forecast = async loc => {
                 <p class="card-text">Temp: ${temp} °F</p>
                 <p class="card-text">Hum: ${humidity} </p>
                 <p class="card-text"> ${description} </p>
+                <p class="card-text">UVi: <span class="uvi ${uvi<3?'green':uvi<6?'yellow':uvi<8?'orange':uvi<11?'red':'purple'}">${uvi}</span></p>
                 <img class="m-auto" src="http://openweathermap.org/img/w/${icon}.png">
                 </div>
                 </div>`
-                // <p class="card-text uvi"> ${uvi} </p>
 
         $(".card-deck").append($card);
     }

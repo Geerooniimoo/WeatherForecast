@@ -3,6 +3,7 @@ body {
     background-image: url("../images/background1.jpg");
     background-repeat: no-repeat;
     background-size: cover;
+    padding-bottom: 5vh;
 }
 
 .list-group {
@@ -83,6 +84,8 @@ button {
     width: fit-content;
     border: 2px solid black;
     border-radius: 8px;
+    color: black;
+    padding: 5px;
 }
 
 .green {
