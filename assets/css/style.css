@@ -19,17 +19,32 @@ h3 {
 }
 
 .col-4 hr {
-    width: 100%;
+    width: 80%;
     height: 5px;
-    background-color: #08417dc2;
+    background-color: black;
+}
+
+input {
+    margin: 10px 10%;
+    border: 3px solid gray;
+    border-bottom: none;
+    border-right: none;
+}
+
+button {
+    margin: 5px 10%;
+    background-color: teal;
+    color: white;
+    border-radius: 8px;
+}
+
+.submit {
+    background-color: green;
 }
 
 .col-4 {
-    /* margin-top: 50px; */
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-
 }
 
 .title {
@@ -56,6 +71,7 @@ h3 {
 .card {
     text-align: center;
     font-family: serif;
+    background-color: #032448c2;
     box-shadow: 5px 5px 20px black;
 }
 
