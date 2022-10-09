@@ -25,45 +25,52 @@ renderStore();
 
 const forecast = async loc => {
 
-        if (!loc) return;
+    if (!loc) return;
 
-        let url = `https://api.openweathermap.org/data/2.5/forecast?q=${loc}&APPID=${apiKey}&units=imperial`;
-        
-        let { city, list } = await fetch(url).then(data => data.json());
+    let url1 = `https://api.openweathermap.org/geo/1.0/direct?q=${loc}&APPID=${apiKey}`;
+    let [{lat,lon,name:city,country}] = await fetch(url1).then(data => data.json());
 
-        if(!store.includes(city.name)) {
-            store.push(city.name);
-            localStorage.cities = JSON.stringify(store);
-            renderStore();
-        };
+    let url2 = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&APPID=${apiKey}&units=imperial`;
+    
+    let {
+            daily,current:{dt,humidity,temp,uvi,weather:[{description,icon}]}
+        } = await fetch(url2).then(data => data.json());
 
-        x = list;
+        x = daily;
+    
+    if(!store.includes(city)) {
+        store.push(city);
+        localStorage.cities = JSON.stringify(store);
+        renderStore();
+    };
 
-        let $div = `<div class="ml-4">
-                        <h1 class="display-3 text-center">${city.name}, ${city.country}</h1>
-                        <hr>
-                        <h2>${moment(list[0].dt_txt).format('llll')}</h2>
-                        <h2>Temperature: ${list[0].main.temp} °F</h2>
-                        <h2>Humidity: ${list[0].main.humidity}</h2>
-                        <h2>Description: ${list[0].weather[0].description}</h2>
-                        <img class="mainIcon" src="http://openweathermap.org/img/w/${list[0].weather[0].icon}.png">
-                    </div>`
+    let $div = `<div class="ml-4">
+                    <h1 class="display-3 text-center">${city}, ${country}</h1>
+                    <hr>
+                    <h2>${moment(dt*1000).format('llll')}</h2>
+                    <h2>Temperature: ${temp} °F</h2>
+                    <h2>Humidity: ${humidity}</h2>
+                    <h2>Description: ${description}</h2>
+                    <h2 class="uvi ${uvi<3?'green':uvi<6?'yellow':uiv<8?'orange':uvi<11?'red':'purple'}"> ${uvi} </h2>
+                    <img class="mainIcon" src="http://openweathermap.org/img/w/${icon}.png">
+                </div>`
   
     $(".jumbotron").html($div);
 
     $(".card-deck").empty();
-    for (let i = 3; i < list.length; i = i + 8) {
-        const { dt_txt, main, weather } = list[i];
+    for (let i = 0; i < 5; i = i++) {
+        const { dt, humidity, temp:{max:temp}, weather:[description,icon] } = daily[i];
         
         const $card = `<div class="card text-white">
             <div class="card-body p-0">
-                <p class="card-text day"> ${moment(dt_txt).format('dddd')} </p>
-                <p class="card-text">Temp: ${main.temp} °F</p>
-                <p class="card-text">Hum: ${main.humidity} </p>
-                <p class="card-text"> ${weather[0].description} </p>
-                <img class="m-auto" src="http://openweathermap.org/img/w/${weather[0].icon}.png">
-            </div>
-        </div>`
+                <p class="card-text day"> ${moment(dt*1000).format('dddd')} </p>
+                <p class="card-text">Temp: ${temp} °F</p>
+                <p class="card-text">Hum: ${humidity} </p>
+                <p class="card-text"> ${description} </p>
+                <img class="m-auto" src="http://openweathermap.org/img/w/${icon}.png">
+                </div>
+                </div>`
+                // <p class="card-text uvi"> ${uvi} </p>
 
         $(".card-deck").append($card);
     }
