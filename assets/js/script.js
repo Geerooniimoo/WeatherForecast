@@ -1,6 +1,6 @@
 const getKey = () => {
-    if (!apiKey) {
-        const apiKey = prompt("Please enter Open Weather Map API Key.")
+    if (!localStorage.apiKey || localStorage.apiKey == 'null') {
+        localStorage.apiKey = prompt("Please enter Open Weather Map API Key.")
         getKey();
     };
 };
@@ -27,11 +27,11 @@ const forecast = async loc => {
 
     if (!loc) return;
 
-    let url1 = `https://api.openweathermap.org/geo/1.0/direct?q=${loc}&APPID=${apiKey}&limit=1`;
+    let url1 = `https://api.openweathermap.org/geo/1.0/direct?q=${loc}&APPID=${localStorage.apiKey}&limit=1`;
     let data = await fetch(url1).then(data => data.json());
     x = data;
     let [{lat,lon,name:city,country}] = await fetch(url1).then(data => data.json());
-    let url2 = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&APPID=${apiKey}&units=imperial`;
+    let url2 = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&APPID=${localStorage.apiKey}&units=imperial`;
     
     let {
             daily,current:{dt,humidity,temp,uvi,weather:[{description,icon}]}
