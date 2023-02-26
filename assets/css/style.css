@@ -89,6 +89,10 @@ button {
     box-shadow: 5px 5px 20px;
 }
 
+.currentDiv {
+    width: 60%;
+}
+
 .jumbotron {
     background-color: #08417dc2;
     color: white;
@@ -141,4 +145,64 @@ button {
     width: 200px;
     position: absolute;
     bottom: 10%;
+}
+
+
+@media screen and (max-width:500px) {
+
+    body {
+        background-size: 100vh;
+    }
+    
+    .container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .row {
+        display: flex;
+        flex-direction: column;
+    }
+
+    aside {
+        display: none !important;
+    }
+
+    .currentDiv {
+        order: 1;
+        width: 95%;
+        margin: 0 auto;
+    }
+
+    .currentDiv h1 {
+        font-size: 1.5rem;
+    }
+
+    .currentDiv h2 {
+        font-size: 1rem;
+    }
+
+    .col-4 {
+        order: 2;
+    }
+
+    .card-deck {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+    }
+
+    .card-deck .card {
+        width: 20%;
+    } 
+
+    .card-deck .day {
+        font-size: 1.5rem;
+    }
+
+    .card-deck .card-text {
+        font-size: .5rem;
+        padding: 0;
+        margin: 5px;
+    }
 }
