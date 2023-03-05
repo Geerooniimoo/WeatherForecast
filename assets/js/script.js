@@ -1,4 +1,4 @@
-let store = localStorage.cities ? JSON.parse(localStorage.cities) : [];
+let store = localStorage.cities ? JSON.parse(localStorage.cities) : ['Rocky Mount'];
 
 const renderStore = () => {
     if (store.length) {
