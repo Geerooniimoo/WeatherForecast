@@ -64,6 +64,6 @@ const forecast = async loc => {
     }
 };
 
-// forecast();
+forecast();
 
 $('#submit').on('click', () => forecast($('input').val()));
