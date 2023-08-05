@@ -31,7 +31,7 @@ aside {
 }
 
 .list-group button {
-    width: 160px;
+    width: 170px;
     border-radius: 8px 0 0 8px;
     margin: 0 2px;
     padding: 2.5px 0 0 0;
@@ -113,6 +113,7 @@ button {
     background-color: #08417dc2;
     font-family: serif;
     box-shadow: 5px 5px 20px;
+    border-bottom: 2px solid black;
 }
 
 #currentDiv {
@@ -160,6 +161,7 @@ button {
 
 .green {
     background-color: green;
+    color: white;
 }
 
 .yellow {
@@ -167,11 +169,13 @@ button {
 }
 
 .orange {
-    background-color: orange;
+    background-color: #e39302;
+    color: white;
 }
 
 .red {
     background-color: red;
+    color: white;
 }
 
 .purple {

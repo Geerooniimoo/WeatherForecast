@@ -5,7 +5,7 @@ const renderStore = () => {
         $(".list-group").empty();
 
         store.forEach(city => {
-            $(".list-group").append($(`<div><button onclick="forecast('${city}')">${city}</button><span class="del">&#10060;</span></div>`));
+            $(".list-group").append($(`<div><button onclick="forecast('${city}')">${city}</button><span onclick="removeCity('${city}')">&#10060;</span></div>`));
         });
     };
 };
@@ -23,7 +23,6 @@ const forecast = async loc => {
     let url2 = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&APPID=${apiKey}&units=imperial`;
 
     let data = await (await fetch(url2)).json();
-    x=data;
     let { daily, current: { dt, humidity, temp, uvi, weather: [{ description, icon }] } } = data;
     
     store = store.filter(obj => obj != city);
@@ -66,4 +65,10 @@ const forecast = async loc => {
 
 forecast();
 
-$('#submit').on('click', () => forecast($('input').val()));
+$('#submitBtn').on('click', () => forecast($('input').val()));
+
+const removeCity = city => {
+    store = store.filter(obj => obj != city);
+    localStorage.cities = JSON.stringify(store);
+    renderStore();
+};
